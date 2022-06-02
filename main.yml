@@ -24,9 +24,9 @@
       ansible.builtin.import_tasks: tasks/docker.yml
 
     - name: Setup internet monitoring.
-      ansible.builtin.import_tasks: tasks/internet-monitoring
+      ansible.builtin.import_tasks: tasks/internet-monitoring.yml
       when: monitoring_enable
 
     - name: Setup Pi Hole
-      ansible.builtin.import_tasks: tasks/pi_hole.yml
+      ansible.builtin.import_tasks: tasks/pi-hole.yml
       when: pihole_enable

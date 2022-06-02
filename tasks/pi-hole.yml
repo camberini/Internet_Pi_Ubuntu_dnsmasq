@@ -19,6 +19,6 @@
 
 - name: Ensure Pi-hole is runing.
   community.docker.docker_compose:
-    project_src" "{{ config_dir }}/pi-hole/"
+    project_src: "{{ config_dir }}/pi-hole/"
     build: false
   become: false
