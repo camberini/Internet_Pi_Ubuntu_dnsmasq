@@ -1,0 +1,35 @@
+---
+
+- name: Disable systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: no
+  become: true
+
+- name: Remove resolv.conf
+  ansible.builtin.file:
+    dest: /etc/resolv.conf
+    state: absent
+  become: true
+
+- name: Copy resolv conf template to pi
+  ansible.builtin.template:
+    src: templates/resolv.conf.j2
+    dest: /etc/resolv.conf
+    mode: 0644
+  become: true
+
+- name: Install dnsmasq
+  ansible.builtin.apt:
+    name: dnsmasq
+    state: latest
+  become: true
+
+- name: Copy dnsmasq conf template to Pi.
+  ansible.builtin.template:
+    src: templates/dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    mode: 0644
+  become: true
+  notify: Resstart dnsmasq

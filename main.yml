@@ -1,0 +1,32 @@
+---
+- hosts: internet_pi
+  become: true
+
+  pre_tasks:
+    - name: Load variables
+      ansible.builtin.include_vars: "{{ item }}"
+      loop:
+        - config.yml
+
+    - name: Ensure apt cache is up to date.
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: 
+        - ansible_facts.os_family == "Debian"
+
+  handlers:
+    - name: Include handlers
+      ansible.builtin.import_tasks: tasks/handlers.yml
+
+  tasks:
+    - name: Setup Docker
+      ansible.builtin.import_tasks: tasks/docker.yml
+
+    - name: Setup internet monitoring.
+      ansible.builtin.import_tasks: tasks/internet-monitoring
+      when: monitoring_enable
+
+    - name: Setup Pi Hole
+      ansible.builtin.import_tasks: tasks/pi_hole.yml
+      when: pihole_enable
