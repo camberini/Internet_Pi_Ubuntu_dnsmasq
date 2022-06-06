@@ -9,7 +9,7 @@ name_server: "1.1.1.1"
 pihole_enable: true
 pihole_hostname: pihole
 pihole_timezone: America/Chicago
-pihole_password: "G00d_Gr!ef"
+pihole_password: "Password"
 
 # Internet monitoring configuration.
 monitoring_enable: true
